@@ -1,7 +1,8 @@
 from flask import Flask
+from blueprints.home import home_page
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    app.register_blueprint(home_page)
 
-@app.route('/')
-def test():
-    return '<h1>Outro texto</h1>'
+    return app
