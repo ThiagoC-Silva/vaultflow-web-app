@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
     <title>Vaultflow</title>
 </head>
 <body>
-    
+    <nav id="sidebar">
+        {% include "sidebar/sidebar.html" %}
+    </nav>
+
+    <main>
+        <h1>Home</h1>
+    </main>
 </body>
 </html>
