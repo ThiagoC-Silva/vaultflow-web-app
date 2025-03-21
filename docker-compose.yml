@@ -4,6 +4,39 @@ services:
     hostname: vaultflow
     container_name: vaultflow_app
     ports:
-      - "5000:5000"
+      - "${WEB_PORT}:5000"
     volumes:
       - .:/app
+    environment:
+      FLASK_APP: app.py
+      FLASK_DEBUG: "1"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      DATABAE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    depends_on:
+      - db
+    networks:
+      - vaultflow_network
+    
+  db:
+    image: postgres:17.0
+    hostname: vaultflow_db
+    container_name: vaultflow_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - vaultflow_network
+
+volumes:
+  db-data:
+
+networks:
+  vaultflow_network:
+    driver: bridge
